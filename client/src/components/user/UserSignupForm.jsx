@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
 import image from "../../assets/573528608fc1c81c6cd3a4700aba3196.jpeg";
+import { handleSignup } from '../../api/apis';
+import { Link, useNavigate } from "react-router-dom";
 
 const UserSignupForm = () => {
   // State variables to store form field values
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize the navigate function
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // Here you can handle form submission, e.g., send data to backend
     console.log("Form submitted:", { fullName, email, password });
+
+    try {
+      const data = await handleSignup({ fullName, email, password });
+      console.log("Signup successful:", data);
+      // If signup is successful, navigate to the login page
+      navigate('/login'); // Navigate to the login page
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
     <div className='flex justify-center items-center'>
-          <img className='w-[500px] h-[500px] mt-5 rounded-lg ' src={image} alt="" />
+      <img className='w-[500px] h-[500px] mt-5 rounded-lg ' src={image} alt="" />
       <div>
         <div className='ml-48 w-96 mr-40'>
           <h2 className='text-2xl font-bold'>Create an account</h2>
@@ -66,7 +78,6 @@ const UserSignupForm = () => {
           </form>
         </div>
       </div>
-    
     </div>
   );
 }

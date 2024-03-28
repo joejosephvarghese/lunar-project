@@ -3,7 +3,7 @@ import { products } from '../../constants/constants';
 
 const Cards = () => {
   const addToCart = (productId) => {
-    // Implement your logic to add the product to the cart
+
     console.log(`Product ${productId} added to cart`);
   };
 

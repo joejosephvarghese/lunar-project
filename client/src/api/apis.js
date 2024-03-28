@@ -10,3 +10,10 @@ export const handleAuthentication = async (credentials) => {
    const {data} =  await instance.post('/auth/login', credentials)
    return data;
 }
+
+
+export const handleSignup= async (credentials) => {
+    const {data} =  await instance.post('/auth/signup', credentials)
+    return data;
+ }
+ 

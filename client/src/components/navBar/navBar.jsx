@@ -10,10 +10,10 @@ const Header = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if a token exists in local storage
+  
     const token = localStorage.getItem("token");
     if (token) {
-      // Decode token to extract user details
+      
       const decodedToken = atob(token.split('.')[1]);
       const userData = JSON.parse(decodedToken);
       setUser(userData);

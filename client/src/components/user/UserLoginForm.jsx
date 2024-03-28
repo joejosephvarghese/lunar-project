@@ -2,25 +2,31 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate from React Router
 import image from "../../assets/9017fd34788226a7e5d822d87fe4a86b.jpeg";
 import { handleAuthentication } from "../../api/apis";
-
+import { Toaster, toast } from "sonner";
 const UserLoginForm = () => {
   // State variables to store form field values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   // Function to handle form submission
+  const notify = (msg, type) =>
+    type === "error" ? toast.error(msg) : toast.success(msg);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can handle form submission, e.g., send data to backend
+   
     console.log("Form submitted:", { email, password });
     try {
       const { token } = await handleAuthentication({ email, password });
       localStorage.setItem("token", token);
-      // Navigate to the desired route after successful login
-      navigate("/"); // Change "/" to your desired route
+      notify("Login success", "success");
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     } catch (error) {
-      console.log(error.message);
+      notify(error.message, "error");
     }
   };
 
@@ -89,6 +95,7 @@ const UserLoginForm = () => {
           </form>
         </div>
       </div>
+      <Toaster richColors />
     </div>
   );
 };
